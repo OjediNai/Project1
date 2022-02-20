@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+
+df = pd.read_csv('obesityvstemp.csv')
+print(df)
+obese = list(df['ObesityRate'])
+temp = list(df['Temperature'])
+state = list(df['State'])
+
+plt.scatter(temp,obese)
+plt.xlabel('Temperature In Farenheit')
+plt.ylabel('Obesity Rate %')
+
+module = smf.ols(formula ='ObesityRate ~ Temperature', data = df)
+print(module)
+result = module.fit()
+print(result)
+summary = result.summary()
+print(summary)
+
+rline = result.fittedvalues
+plt.plot(temp,rline)
